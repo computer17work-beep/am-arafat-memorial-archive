@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AM Arafat Memorial Archive - v2</title>
+  <title>AM Arafat Memorial Archive</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Birthday Banner -->
+  <!-- Birthday Special Banner -->
   <div id="birthdayBanner" class="birthday-banner">
-    🎂 Happy Birthday in Heaven, AM Arafat! 🕊️ Always in our hearts.
+    🎂 AM Arafat! 🕊️ Always in our hearts, May allah grant him the highest place in Jannah. 🤲
+  </div>
   </div>
 
+  <!-- Navigation Bar -->
   <nav class="navbar">
     <a href="index.html" class="active">🏠 Home</a>
     <a href="gallery.html">📷 Photos</a>
@@ -20,19 +22,34 @@
     <a href="admin.html">👑 Admin</a>
   </nav>
 
+  <!-- Header Section with Friend's Photo -->
+  <header>
+    <img src="https://i.ibb.co.com/3mdrdrC6/IMG-20260724-WA0000.jpg" class="hero-image" alt="AM Arafat">
+    <h1>🕊️ AM Arafat Memorial Archive</h1>
+    <p class="tagline">Forever in our hearts • In Loving Memory</p>
+  </header>
+
   <main class="container">
     
-    <!-- Today in Memory Section -->
+    <!-- Today in Memory Section (আজকের দিনে) -->
     <div id="todayInMemory" class="card today-memory-card" style="display: none;">
       <h2>📅 Today in Memory (আজকের দিনে)</h2>
       <p id="todayMemoryDate" style="color: var(--accent-color); font-size: 14px;"></p>
       <div id="todayMemoryContent" style="margin-top: 15px;"></div>
     </div>
 
+    <!-- About Him Section -->
+    <div class="card">
+      <h2>🕊️ About Him</h2>
+      <p style="margin-top: 10px; color: var(--text-sub); line-height: 1.6;">
+        This archive is dedicated to preserving the cherished memories, unforgettable moments, and legacy of our beloved AM Arafat.
+      </p>
+    </div>
+
     <!-- Favorite Recitation/Music Section -->
     <div class="card">
       <h3>🎵 Favorite Recitation / Audio</h3>
-      <p style="font-size: 13px; color: var(--text-sub);">Listen to his favorite audio memory.</p>
+      <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 8px;">Listen to his favorite audio memory.</p>
       <audio controls class="media-player">
         <source src="favorite-recitation.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -42,6 +59,7 @@
     <!-- Featured Video Section -->
     <div class="card">
       <h3>📹 Video Memory</h3>
+      <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 8px;">Watch precious video moments.</p>
       <video controls class="media-player">
         <source src="video-memory.mp4" type="video/mp4">
         Your browser does not support video playback.
