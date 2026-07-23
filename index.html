@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>এ এম আরাফাত - স্মৃতি আর্কাইভ</title>
-  <link rel="stylesheet" href="style.css?v=15.0">
+  <link rel="stylesheet" href="style.css?v=20.0">
   
-  <!-- Firebase SDKs -->
+  <!-- Firebase Compatibility SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-  <!-- 📌 AUTHENTICATION CONTAINER (Login / Register / Forgot Password) -->
+  <!-- 📌 AUTHENTICATION CONTAINER -->
   <div id="authContainer" class="container" style="margin-top: 50px;">
     
     <!-- 1. LOGIN FORM -->
@@ -47,9 +47,9 @@
     <!-- 3. FORGOT PASSWORD FORM -->
     <div id="forgotCard" class="card hidden" style="text-align: center;">
       <h2 style="font-size: 20px; margin-bottom: 5px;">পাসওয়ার্ড <span style="color: var(--accent-red);">রিসেট রিকোয়েস্ট</span></h2>
-      <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 15px;">আপনার ইউজারনেম দিন, এডমিন অ্যাপ্রুভ করলে পাসওয়ার্ড চেঞ্জ করতে পারবেন</p>
+      <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 15px;">ইউজারনেম দিন, এডমিন অ্যাপ্রুভ করলে পাসওয়ার্ড চেঞ্জ করতে পারবেন</p>
       
-      <input type="text" id="forgotUsername" placeholder="আপনার রেজিস্টার্ড ইউজারনেম">
+      <input type="text" id="forgotUsername" placeholder="আপনার ইউজারনেম">
       <button onclick="requestPasswordReset()" class="btn-red">এডমিনকে রিকোয়েস্ট পাঠান</button>
       
       <div id="resetSection" class="hidden" style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
@@ -65,21 +65,20 @@
 
   </div>
 
-  <!-- 📌 MAIN WEBSITE (লগইন করার পর আনলক হবে) -->
+  <!-- 📌 MAIN WEBSITE -->
   <div id="mainWebsite" class="hidden">
 
-    <!-- Top Navigation Menu -->
     <nav class="navbar">
       <div class="brand-text">
         <h1>এ এম আরাফাত</h1>
         <span id="roleBadge">স্মৃতি আর্কাইভ</span>
       </div>
       <div class="nav-links">
-        <a onclick="showPage('home')" id="navHome" class="active">হোম</a>
-        <a onclick="showPage('feed')" id="navFeed">গ্যালারি</a>
-        <a onclick="showPage('upload')" id="navUpload">আপলোড</a>
-        <a onclick="showPage('dowa')" id="navDowa">দোয়া</a>
-        <a onclick="showPage('profile')" id="navProfile">প্রোফাইল</a>
+        <a onclick="showPage('Home')" id="navHome" class="active">হোম</a>
+        <a onclick="showPage('Feed')" id="navFeed">গ্যালারি</a>
+        <a onclick="showPage('Upload')" id="navUpload">আপলোড</a>
+        <a onclick="showPage('Dowa')" id="navDowa">দোয়া</a>
+        <a onclick="showPage('Profile')" id="navProfile">প্রোফাইল</a>
         <a onclick="handleLogout()" style="color: var(--accent-red);">লগআউট</a>
       </div>
     </nav>
@@ -95,8 +94,8 @@
           <p class="hero-quote">"স্মৃতিগুলো থেকে যায় চিরকাল, থেকে যায় ভালোবাসায়।"</p>
 
           <div class="cta-group">
-            <button onclick="showPage('feed')" class="btn-red">ছবিসমূহ দেখুন ▶</button>
-            <button onclick="showPage('dowa')" class="btn-dark">দোয়া ও স্মৃতি পোস্ট করুন 📖</button>
+            <button onclick="showPage('Feed')" class="btn-red">ছবিসমূহ দেখুন ▶</button>
+            <button onclick="showPage('Dowa')" class="btn-dark">দোয়া ও স্মৃতি পোস্ট করুন 📖</button>
           </div>
         </div>
 
@@ -108,13 +107,13 @@
         </div>
       </section>
 
-      <!-- 2. GALLERY / FEED PAGE -->
+      <!-- 2. GALLERY PAGE -->
       <section id="pageFeed" class="hidden">
         <h3 style="margin-bottom: 15px;">📸 বন্ধু ও স্বজনদের শেয়ার করা ছবি</h3>
-        <div id="feedList">কোড লোড হচ্ছে...</div>
+        <div id="feedList">ডেটা লোড হচ্ছে...</div>
       </section>
 
-      <!-- 3. DIRECT GALLERY PHOTO UPLOAD PAGE -->
+      <!-- 3. PHOTO UPLOAD PAGE -->
       <section id="pageUpload" class="hidden">
         <div class="card">
           <h3 class="card-title">🖼️ গ্যালারি থেকে ছবি আপলোড করুন</h3>
@@ -141,7 +140,7 @@
         <div id="dowaList"></div>
       </section>
 
-      <!-- 5. USER PROFILE PAGE (ইউজার কতটি ছবি আপলোড করেছে ও তার ছবিসমূহ) -->
+      <!-- 5. USER PROFILE PAGE -->
       <section id="pageProfile" class="hidden">
         <div class="card" style="text-align: center;">
           <div style="width: 70px; height: 70px; background: var(--accent-red); border-radius: 50%; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; color: white;" id="profileAvatar">U</div>
@@ -156,7 +155,7 @@
           </div>
         </div>
 
-        <!-- ADMIN CONTROLS (শুধুমাত্র এডমিন দেখলে ফরগোট পাসওয়ার্ড রিকোয়েস্টগুলো দেখাবে) -->
+        <!-- ADMIN PANEL FOR FORGOT PASSWORD -->
         <div id="adminResetPanel" class="card hidden">
           <h3 class="card-title" style="color: var(--accent-red);">👑 পাসওয়ার্ড রিসেট রিকোয়েস্টসমূহ (Admin)</h3>
           <div id="resetRequestsList">কোনো রিকোয়েস্ট নেই</div>
@@ -169,16 +168,16 @@
     </main>
   </div>
 
-  <!-- JavaScript Code -->
+  <!-- JavaScript Firebase Integration Logic -->
   <script>
-    // 🔑 FIREBASE CONFIGURATION (এখানে আপনার ফায়ারবেসের Key-গুলো বসান)
+    // 🔑 YOUR REAL FIREBASE CONFIGURATION (Connected!)
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyDysIyTr7bIuE66qj0gMTGIQyFL3zL8USM",
+      authDomain: "am-arafat-memorial-archive.firebaseapp.com",
+      projectId: "am-arafat-memorial-archive",
+      storageBucket: "am-arafat-memorial-archive.firebasestorage.app",
+      messagingSenderId: "116897735667",
+      appId: "1:116897735667:web:3ec2803444f319f6a9e886"
     };
 
     // Initialize Firebase
@@ -187,11 +186,9 @@
     }
     const db = firebase.firestore();
 
-    // Application State
     let currentUser = null;
     let isAdmin = false;
 
-    // --- Authentication UI Switcher ---
     function switchAuth(type) {
       document.getElementById('loginCard').classList.add('hidden');
       document.getElementById('registerCard').classList.add('hidden');
@@ -202,31 +199,36 @@
       if (type === 'forgot') document.getElementById('forgotCard').classList.remove('hidden');
     }
 
-    // --- Sign Up / Register ---
+    // --- Sign Up ---
     async function handleRegister() {
       const username = document.getElementById('regUsername').value.trim().toLowerCase();
       const password = document.getElementById('regPassword').value.trim();
 
       if (!username || !password) {
-        alert("দয়া করে ইউজারনেম এবং পাসওয়ার্ড পূরণ করুন!");
+        alert("ইউজারনেম এবং পাসওয়ার্ড পূরণ করুন!");
         return;
       }
 
-      const userDoc = await db.collection("users").doc(username).get();
-      if (userDoc.exists) {
-        alert("এই ইউজারনেমে আগেই অ্যাকাউন্ট খোলা হয়েছে! অন্য নাম দিন।");
-        return;
+      try {
+        const userDoc = await db.collection("users").doc(username).get();
+        if (userDoc.exists) {
+          alert("এই ইউজারনেমে আগেই অ্যাকাউন্ট খোলা হয়েছে! অন্য নাম দিন।");
+          return;
+        }
+
+        await db.collection("users").doc(username).set({
+          username: username,
+          password: password,
+          role: "user",
+          resetRequested: false,
+          resetAllowed: false
+        });
+
+        alert("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন লগইন করুন।");
+        switchAuth('login');
+      } catch (e) {
+        alert("ভুল হচ্ছে: " + e.message);
       }
-
-      await db.collection("users").doc(username).set({
-        username: username,
-        password: password,
-        role: "user",
-        resetAllowed: false
-      });
-
-      alert("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন লগইন করুন।");
-      switchAuth('login');
     }
 
     // --- Login ---
@@ -239,18 +241,23 @@
         return;
       }
 
-      // Admin Bypass or Database Check
+      // Hardcoded Super Admin Option
       if (username === "admin" && password === "9999") {
         isAdmin = true;
-        currentUser = "Admin";
+        currentUser = "admin";
       } else {
-        const userDoc = await db.collection("users").doc(username).get();
-        if (!userDoc.exists || userDoc.data().password !== password) {
-          alert("ভুল ইউজারনেম অথবা পাসওয়ার্ড!");
+        try {
+          const userDoc = await db.collection("users").doc(username).get();
+          if (!userDoc.exists || userDoc.data().password !== password) {
+            alert("ভুল ইউজারনেম অথবা পাসওয়ার্ড!");
+            return;
+          }
+          isAdmin = userDoc.data().role === "admin";
+          currentUser = username;
+        } catch (e) {
+          alert("ডাটাবেস কানেকশন এরর! ফায়ারবেস রুল চেক করুন।");
           return;
         }
-        isAdmin = userDoc.data().role === "admin";
-        currentUser = username;
       }
 
       document.getElementById('authContainer').classList.add('hidden');
@@ -268,7 +275,7 @@
       switchAuth('login');
     }
 
-    // --- Forgot Password Request ---
+    // --- Forgot Password ---
     async function requestPasswordReset() {
       const username = document.getElementById('forgotUsername').value.trim().toLowerCase();
       if (!username) { alert("ইউজারনেম লিখুন!"); return; }
@@ -277,7 +284,7 @@
       const doc = await userRef.get();
 
       if (!doc.exists) {
-        alert("এই ইউজারনেমে কোনো অ্যাকাউন্ট পাওয়া যায়নি!");
+        alert("ইউজারনেম পাওয়া যায়নি!");
         return;
       }
 
@@ -285,7 +292,7 @@
         document.getElementById('resetSection').classList.remove('hidden');
       } else {
         await userRef.update({ resetRequested: true });
-        alert("এডমিনের কাছে রিকোয়েস্ট পাঠানো হয়েছে। এডমিন Approve করলে এখানে নতুন পাসওয়ার্ড সেট করতে পারবেন।");
+        alert("এডমিনকে রিকোয়েস্ট পাঠানো হয়েছে। এডমিন Approve করার পর পাসওয়ার্ড পাল্টাতে পারবেন।");
       }
     }
 
@@ -293,7 +300,7 @@
       const username = document.getElementById('forgotUsername').value.trim().toLowerCase();
       const newPass = document.getElementById('newPasswordInput').value.trim();
 
-      if (!newPass) { alert("নতুন পাসওয়ার্ড টাইপ করুন!"); return; }
+      if (!newPass) { alert("নতুন পাসওয়ার্ড লিখুন!"); return; }
 
       await db.collection("users").doc(username).update({
         password: newPass,
@@ -305,7 +312,7 @@
       switchAuth('login');
     }
 
-    // --- Navigation ---
+    // --- Page Navigation ---
     function showPage(pageName) {
       ['Home', 'Feed', 'Upload', 'Dowa', 'Profile'].forEach(p => {
         document.getElementById('page' + p).classList.add('hidden');
@@ -318,13 +325,12 @@
       if (pageName === 'Profile') loadProfile();
     }
 
-    // --- Load Data from Firebase ---
+    // --- Firebase Live Functions ---
     function loadAllData() {
       listenToPosts();
       listenToDowa();
     }
 
-    // Real-time Feed Listener
     function listenToPosts() {
       db.collection("posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
         const feedList = document.getElementById('feedList');
@@ -366,10 +372,11 @@
             </div>
           `;
         });
+      }, err => {
+        console.log(err);
       });
     }
 
-    // Photo Upload (Gallery -> Base64 Data -> Firebase)
     document.getElementById('photoForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const fileInput = document.getElementById('photoFile');
@@ -378,17 +385,21 @@
       if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
         reader.onload = async function(e) {
-          await db.collection("posts").add({
-            author: currentUser,
-            imageUrl: e.target.result,
-            caption: caption,
-            comments: [],
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          });
+          try {
+            await db.collection("posts").add({
+              author: currentUser,
+              imageUrl: e.target.result,
+              caption: caption,
+              comments: [],
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
 
-          document.getElementById('photoForm').reset();
-          alert("ছবিটি সফলভাবে গ্যালারিতে পোস্ট করা হয়েছে!");
-          showPage('Feed');
+            document.getElementById('photoForm').reset();
+            alert("ছবি আপলোড হয়েছে!");
+            showPage('Feed');
+          } catch (err) {
+            alert("আপলোড ব্যর্থ: ছবি অনেক বড় হতে পারে। ছোট ছবি চেষ্টা করুন।");
+          }
         };
         reader.readAsDataURL(fileInput.files[0]);
       }
@@ -408,12 +419,11 @@
     }
 
     async function deletePost(postId) {
-      if (confirm("আপনি কি নিশ্চিত এই পোস্টটি মুছে ফেলতে চান?")) {
+      if (confirm("পোস্টটি ডিলিট করতে চান?")) {
         await db.collection("posts").doc(postId).delete();
       }
     }
 
-    // Dowa Section
     function listenToDowa() {
       db.collection("dowas").orderBy("timestamp", "desc").onSnapshot(snapshot => {
         const dowaList = document.getElementById('dowaList');
@@ -452,13 +462,11 @@
       if (confirm("মুছে ফেলতে চান?")) await db.collection("dowas").doc(id).delete();
     }
 
-    // --- Profile & My Uploaded Photos ---
     async function loadProfile() {
       document.getElementById('profileUsername').innerText = currentUser;
       document.getElementById('profileAvatar').innerText = currentUser.charAt(0).toUpperCase();
       document.getElementById('profileRole').innerText = isAdmin ? "অ্যাডমিন" : "মেম্বার ইউজার";
 
-      // Load user's photos
       const myPhotosList = document.getElementById('myPhotosList');
       myPhotosList.innerHTML = '';
 
@@ -466,22 +474,19 @@
       document.getElementById('myPhotoCount').innerText = snapshot.size;
 
       if (snapshot.empty) {
-        myPhotosList.innerHTML = '<p style="color:var(--text-secondary); text-align:center;">আপনি এখনো কোনো ছবি পোস্ট করেননি।</p>';
+        myPhotosList.innerHTML = '<p style="color:var(--text-secondary); text-align:center;">আপনি কোনো ছবি পোস্ট করেননি।</p>';
       } else {
         snapshot.forEach(doc => {
           const post = doc.data();
           myPhotosList.innerHTML += `
             <div class="card" style="padding:10px; margin-bottom:10px; display:flex; gap:10px; align-items:center;">
-              <img src="${post.imageUrl}" style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
-              <div>
-                <p style="font-size:13px; color:#fff;">${post.caption}</p>
-              </div>
+              <img src="${post.imageUrl}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
+              <p style="font-size:13px; color:#fff;">${post.caption}</p>
             </div>
           `;
         });
       }
 
-      // If Admin, show password reset panel
       if (isAdmin) {
         const resetPanel = document.getElementById('adminResetPanel');
         resetPanel.classList.remove('hidden');
