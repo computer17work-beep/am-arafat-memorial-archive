@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>এ এম আরাফাত - স্মৃতি আর্কাইভ</title>
-  <link rel="stylesheet" href="style.css?v=20.0">
+  <link rel="stylesheet" href="style.css?v=25.0">
   
   <!-- Firebase Compatibility SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -88,10 +88,10 @@
       <!-- 1. HOME PAGE -->
       <section id="pageHome">
         <div class="hero">
-          <img src="https://via.placeholder.com/150/121212/e11d48?text=Arafat" alt="Arafat" class="hero-img">
-          <div><span class="life-span">ALWAYS IN OUR HEARTS</span></div>
-          <h1 class="hero-title">এ এম আরাফাত</h1>
-          <p class="hero-quote">"স্মৃতিগুলো থেকে যায় চিরকাল, থেকে যায় ভালোবাসায়।"</p>
+          <img id="heroImageDisplay" src="https://via.placeholder.com/150/121212/e11d48?text=Arafat" alt="Arafat" class="hero-img">
+          <div><span id="heroTaglineDisplay" class="life-span">ALWAYS IN OUR HEARTS</span></div>
+          <h1 id="heroTitleDisplay" class="hero-title">এ এম আরাফাত</h1>
+          <p id="heroQuoteDisplay" class="hero-quote">"স্মৃতিগুলো থেকে যায় চিরকাল, থেকে যায় ভালোবাসায়।"</p>
 
           <div class="cta-group">
             <button onclick="showPage('Feed')" class="btn-red">ছবিসমূহ দেখুন ▶</button>
@@ -140,7 +140,7 @@
         <div id="dowaList"></div>
       </section>
 
-      <!-- 5. USER PROFILE PAGE -->
+      <!-- 5. USER PROFILE PAGE & ADMIN PANEL -->
       <section id="pageProfile" class="hidden">
         <div class="card" style="text-align: center;">
           <div style="width: 70px; height: 70px; background: var(--accent-red); border-radius: 50%; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; color: white;" id="profileAvatar">U</div>
@@ -155,7 +155,26 @@
           </div>
         </div>
 
-        <!-- ADMIN PANEL FOR FORGOT PASSWORD -->
+        <!-- 👑 ADMIN HERO UPDATE PANEL -->
+        <div id="adminHeroPanel" class="card hidden" style="border: 1px solid var(--accent-red);">
+          <h3 class="card-title" style="color: var(--accent-red);">👑 হোম পেজের ছবি ও হেডার পরিবর্তন (Admin)</h3>
+          
+          <label style="font-size: 12px; color: var(--text-secondary);">নতুন কভার/প্রোফাইল ফটো নির্বাচন করুন:</label>
+          <input type="file" id="adminHeroFile" accept="image/*" style="padding: 8px;">
+
+          <label style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; display:block;">ট্যাগলাইন (উপরের ছোট লেখা):</label>
+          <input type="text" id="adminHeroTagline" placeholder="যেমন: ALWAYS IN OUR HEARTS">
+
+          <label style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; display:block;">নাম / শিরোনাম:</label>
+          <input type="text" id="adminHeroTitle" placeholder="যেমন: এ এম আরাফাত">
+
+          <label style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; display:block;">স্মৃতি বার্তা / কোট:</label>
+          <input type="text" id="adminHeroQuote" placeholder='যেমন: "স্মৃতিগুলো থেকে যায় চিরকাল..."'>
+
+          <button onclick="updateHeroSettings()" class="btn-red" style="margin-top: 15px;">হোম পেজ আপডেট করুন 💾</button>
+        </div>
+
+        <!-- ADMIN PASSWORD RESET PANEL -->
         <div id="adminResetPanel" class="card hidden">
           <h3 class="card-title" style="color: var(--accent-red);">👑 পাসওয়ার্ড রিসেট রিকোয়েস্টসমূহ (Admin)</h3>
           <div id="resetRequestsList">কোনো রিকোয়েস্ট নেই</div>
@@ -170,7 +189,6 @@
 
   <!-- JavaScript Firebase Integration Logic -->
   <script>
-    // 🔑 YOUR REAL FIREBASE CONFIGURATION (Connected!)
     const firebaseConfig = {
       apiKey: "AIzaSyDysIyTr7bIuE66qj0gMTGIQyFL3zL8USM",
       authDomain: "am-arafat-memorial-archive.firebaseapp.com",
@@ -180,7 +198,6 @@
       appId: "1:116897735667:web:3ec2803444f319f6a9e886"
     };
 
-    // Initialize Firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
@@ -189,6 +206,7 @@
     let currentUser = null;
     let isAdmin = false;
 
+    // --- Switch Auth Cards ---
     function switchAuth(type) {
       document.getElementById('loginCard').classList.add('hidden');
       document.getElementById('registerCard').classList.add('hidden');
@@ -199,7 +217,7 @@
       if (type === 'forgot') document.getElementById('forgotCard').classList.remove('hidden');
     }
 
-    // --- Sign Up ---
+    // --- Register ---
     async function handleRegister() {
       const username = document.getElementById('regUsername').value.trim().toLowerCase();
       const password = document.getElementById('regPassword').value.trim();
@@ -241,7 +259,6 @@
         return;
       }
 
-      // Hardcoded Super Admin Option
       if (username === "admin" && password === "9999") {
         isAdmin = true;
         currentUser = "admin";
@@ -255,7 +272,7 @@
           isAdmin = userDoc.data().role === "admin";
           currentUser = username;
         } catch (e) {
-          alert("ডাটাবেস কানেকশন এরর! ফায়ারবেস রুল চেক করুন।");
+          alert("ডাটাবেস কানেকশন এরর!");
           return;
         }
       }
@@ -292,7 +309,7 @@
         document.getElementById('resetSection').classList.remove('hidden');
       } else {
         await userRef.update({ resetRequested: true });
-        alert("এডমিনকে রিকোয়েস্ট পাঠানো হয়েছে। এডমিন Approve করার পর পাসওয়ার্ড পাল্টাতে পারবেন।");
+        alert("এডমিনকে রিকোয়েস্ট পাঠানো হয়েছে।");
       }
     }
 
@@ -308,11 +325,11 @@
         resetRequested: false
       });
 
-      alert("পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে! এখন লগইন করুন।");
+      alert("পাসওয়ার্ড পরিবর্তন করা হয়েছে! এখন লগইন করুন।");
       switchAuth('login');
     }
 
-    // --- Page Navigation ---
+    // --- Show Page ---
     function showPage(pageName) {
       ['Home', 'Feed', 'Upload', 'Dowa', 'Profile'].forEach(p => {
         document.getElementById('page' + p).classList.add('hidden');
@@ -325,12 +342,57 @@
       if (pageName === 'Profile') loadProfile();
     }
 
-    // --- Firebase Live Functions ---
+    // --- Realtime Data Listeners ---
     function loadAllData() {
+      listenToHeroData();
       listenToPosts();
       listenToDowa();
     }
 
+    // 1. Hero Section Realtime Sync
+    function listenToHeroData() {
+      db.collection("settings").doc("heroDoc").onSnapshot(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          if (data.imageUrl) document.getElementById('heroImageDisplay').src = data.imageUrl;
+          if (data.tagline) document.getElementById('heroTaglineDisplay').innerText = data.tagline;
+          if (data.title) document.getElementById('heroTitleDisplay').innerText = data.title;
+          if (data.quote) document.getElementById('heroQuoteDisplay').innerText = data.quote;
+        }
+      });
+    }
+
+    // 2. Update Hero from Admin Panel
+    async function updateHeroSettings() {
+      const fileInput = document.getElementById('adminHeroFile');
+      const tagline = document.getElementById('adminHeroTagline').value.trim();
+      const title = document.getElementById('adminHeroTitle').value.trim();
+      const quote = document.getElementById('adminHeroQuote').value.trim();
+
+      let updateObject = {};
+      if (tagline) updateObject.tagline = tagline;
+      if (title) updateObject.title = title;
+      if (quote) updateObject.quote = quote;
+
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+          updateObject.imageUrl = e.target.result;
+          await db.collection("settings").doc("heroDoc").set(updateObject, { merge: true });
+          alert("হোম পেজের ছবি ও কনটেন্ট আপডেট হয়েছে!");
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        if (Object.keys(updateObject).length > 0) {
+          await db.collection("settings").doc("heroDoc").set(updateObject, { merge: true });
+          alert("হোম পেজের তথ্য আপডেট হয়েছে!");
+        } else {
+          alert("পরিবর্তন করার জন্য অন্তত যেকোনো একটি ঘরে লিখুন অথবা ছবি সিলেক্ট করুন!");
+        }
+      }
+    }
+
+    // 3. Posts Listener
     function listenToPosts() {
       db.collection("posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
         const feedList = document.getElementById('feedList');
@@ -372,8 +434,6 @@
             </div>
           `;
         });
-      }, err => {
-        console.log(err);
       });
     }
 
@@ -398,7 +458,7 @@
             alert("ছবি আপলোড হয়েছে!");
             showPage('Feed');
           } catch (err) {
-            alert("আপলোড ব্যর্থ: ছবি অনেক বড় হতে পারে। ছোট ছবি চেষ্টা করুন।");
+            alert("আপলোড ব্যর্থ! ছোট সাইজের ছবি ব্যবহার করে দেখুন।");
           }
         };
         reader.readAsDataURL(fileInput.files[0]);
@@ -424,6 +484,7 @@
       }
     }
 
+    // 4. Dowa Listener
     function listenToDowa() {
       db.collection("dowas").orderBy("timestamp", "desc").onSnapshot(snapshot => {
         const dowaList = document.getElementById('dowaList');
@@ -462,6 +523,7 @@
       if (confirm("মুছে ফেলতে চান?")) await db.collection("dowas").doc(id).delete();
     }
 
+    // 5. Profile & Admin Load
     async function loadProfile() {
       document.getElementById('profileUsername').innerText = currentUser;
       document.getElementById('profileAvatar').innerText = currentUser.charAt(0).toUpperCase();
@@ -487,9 +549,10 @@
         });
       }
 
+      // Show Admin Control Panels
       if (isAdmin) {
-        const resetPanel = document.getElementById('adminResetPanel');
-        resetPanel.classList.remove('hidden');
+        document.getElementById('adminHeroPanel').classList.remove('hidden');
+        document.getElementById('adminResetPanel').classList.remove('hidden');
 
         const reqSnapshot = await db.collection("users").where("resetRequested", "==", true).get();
         const reqList = document.getElementById('resetRequestsList');
