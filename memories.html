@@ -1,35 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Memory Wall</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Wall - AM Arafat</title>
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
-
 <body>
 
-<header>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="brand-text">
+        <h1>এ এম আরাফাত</h1>
+        <span>স্মৃতি ওয়াল</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">হোম</a>
+      <a href="gallery.html">ছবি</a>
+      <a href="memories.html" class="active">স্মৃতি</a>
+    </div>
+  </nav>
 
-<h1>💬 Memory Wall</h1>
+  <main class="container">
 
-<p>Share your memories of Arafat.</p>
+    <!-- Memory Post Form -->
+    <div class="card">
+      <h3 class="card-title">✍️ আপনার স্মৃতি শেয়ার করুন</h3>
+      <form id="memoryForm">
+        <input type="text" id="userName" placeholder="আপনার নাম" required>
+        <textarea id="userMessage" rows="4" placeholder="আরাফাত সম্পর্কে আপনার কোনো সুন্দর স্মৃতি লিখুন..." required></textarea>
+        <button type="submit" class="btn-red" style="width: 100%;">পোস্ট করুন</button>
+      </form>
+    </div>
 
-</header>
+    <!-- Posts Container -->
+    <h3 style="margin-bottom: 15px;">স্মৃতিচারণসমূহ</h3>
+    <div id="memoryList"></div>
 
-<div id="memory-list">
+  </main>
 
-<!-- Memories will appear here -->
+  <script>
+    const memoryForm = document.getElementById('memoryForm');
+    const memoryList = document.getElementById('memoryList');
 
-</div>
+    let memories = JSON.parse(localStorage.getItem('arafat_memories')) || [
+      { name: 'শুভাকাঙ্ক্ষী', text: 'আরাফাত ভাই আমাদের মাঝে চিরকাল বেঁচে থাকবেন।' }
+    ];
 
-<br>
+    function renderMemories() {
+      memoryList.innerHTML = '';
+      memories.forEach(mem => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h4 style="color: var(--accent-red); margin-bottom: 5px;">${mem.name}</h4>
+          <p class="card-desc">${mem.text}</p>
+        `;
+        memoryList.appendChild(card);
+      });
+    }
 
-<a href="gallery.html" class="btn">⬅ Back to Gallery</a>
+    memoryForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('userName').value;
+      const text = document.getElementById('userMessage').value;
 
-<script type="module" src="firebase.js"></script>
+      memories.unshift({ name, text });
+      localStorage.setItem('arafat_memories', JSON.stringify(memories));
+      renderMemories();
 
+      memoryForm.reset();
+      alert('আপনার স্মৃতিচারণটি সেভ হয়েছে!');
+    });
+
+    renderMemories();
+  </script>
 </body>
 </html>
