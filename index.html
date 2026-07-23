@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,73 +8,74 @@
 </head>
 <body>
 
-  <!-- Birthday Special Banner -->
-  <div id="birthdayBanner" class="birthday-banner">
-    🎂 AM Arafat! 🕊️ Always in our hearts, May allah grant him the highest place in Jannah. 🤲
-  </div>
-  </div>
-
   <!-- Navigation Bar -->
   <nav class="navbar">
-    <a href="index.html" class="active">🏠 Home</a>
-    <a href="gallery.html">📷 Photos</a>
-    <a href="memories.html">💬 Memories</a>
-    <a href="admin.html">👑 Admin</a>
+    <div class="nav-brand">
+      <img src="profile.jpg" alt="Arafat" class="brand-img">
+      <div class="brand-text">
+        <h1>এ এম আরাফাত</h1>
+        <span>স্মৃতি আর্কাইভ</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="active">হোম</a>
+      <a href="gallery.html">ছবি</a>
+      <a href="memories.html">স্মৃতি</a>
+    </div>
   </nav>
 
-  <!-- Header Section with Friend's Photo -->
-  <header>
-    <img src="https://i.ibb.co.com/3mdrdrC6/IMG-20260724-WA0000.jpg" class="hero-image" alt="AM Arafat">
-    <h1>🕊️ AM Arafat Memorial Archive</h1>
-    <p class="tagline">Forever in our hearts • In Loving Memory</p>
-  </header>
-
-  <main class="container">
-    
-    <!-- Today in Memory Section (আজকের দিনে) -->
-    <div id="todayInMemory" class="card today-memory-card" style="display: none;">
-      <h2>📅 Today in Memory (আজকের দিনে)</h2>
-      <p id="todayMemoryDate" style="color: var(--accent-color); font-size: 14px;"></p>
-      <div id="todayMemoryContent" style="margin-top: 15px;"></div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <img src="profile.jpg" alt="AM Arafat" class="hero-img">
+    <div>
+      <span class="life-span">ALWAYS IN OUR HEARTS</span>
     </div>
+    <h1 class="hero-title">এ এম আরাফাত<br><span style="color: var(--accent-red);">স্মৃতি আর্কাইভ</span></h1>
+    <p class="hero-quote">"স্মৃতিগুলো থেকে যায় চিরকাল, থেকে যায় ভালোবাসায়।"</p>
 
-    <!-- About Him Section -->
+    <div class="cta-group">
+      <a href="gallery.html" class="btn-red">ছবিসমূহ দেখুন ▶</a>
+      <a href="memories.html" class="btn-dark">স্মৃতিচারণ পড়ুন 📖</a>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <main class="container">
+
+    <!-- About Card -->
     <div class="card">
-      <h2>🕊️ About Him</h2>
-      <p style="margin-top: 10px; color: var(--text-sub); line-height: 1.6;">
-        This archive is dedicated to preserving the cherished memories, unforgettable moments, and legacy of our beloved AM Arafat.
+      <h2 class="card-title">🕊️ আমাদের প্রয়াস</h2>
+      <p class="card-desc">
+        এই আর্কাইভটি আমাদের প্রিয় এ এম আরাফাত-এর স্মৃতি, মুহূর্ত এবং ভালোবাসার দিনগুলোকে ডিজিটাল প্ল্যাটফর্মে সংরক্ষণ করার উদ্দেশ্যে তৈরি করা হয়েছে।
       </p>
     </div>
 
-    <!-- Favorite Recitation/Music Section -->
+    <!-- Audio Player Card -->
     <div class="card">
-      <h3>🎵 Favorite Recitation / Audio</h3>
-      <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 8px;">Listen to his favorite audio memory.</p>
+      <h2 class="card-title">🎵 পছন্দের অডিও / তিলাওয়াত</h2>
+      <p class="card-desc">তার প্রিয় অডিও স্মারকটি শুনুন।</p>
       <audio controls class="media-player">
-        <source src="favorite-recitation.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
+        <source src="audio.mp3" type="audio/mpeg">
+        আপনার ব্রাউজার অডিও সাপোর্ট করে না।
       </audio>
     </div>
 
-    <!-- Featured Video Section -->
-    <div class="card">
-      <h3>📹 Video Memory</h3>
-      <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 8px;">Watch precious video moments.</p>
-      <video controls class="media-player">
-        <source src="video-memory.mp4" type="video/mp4">
-        Your browser does not support video playback.
-      </video>
+    <!-- Featured Photo Preview -->
+    <div class="media-card">
+      <img src="profile.jpg" alt="Featured Memory">
+      <div class="media-card-body">
+        <span>স্মৃতি ফ্রেমে</span>
+        <h4>অমূল্য কিছু মুহূর্তের সংগ্রহ</h4>
+      </div>
     </div>
 
-    <!-- Memory Location Map -->
-    <div class="card map-container">
-      <h3>📍 Favorite Places & Map</h3>
-      <p style="font-size: 13px; color: var(--text-sub);">Memorable locations associated with him.</p>
-      <iframe src="https://maps.google.com/maps?q=Barishal,Bangladesh&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    <!-- Total Photos Stat Box -->
+    <div class="stat-box">
+      <div class="stat-label">মোট সংরক্ষিত ছবি</div>
+      <div class="stat-number">১০+</div>
     </div>
 
   </main>
 
-  <script type="module" src="firebase.js"></script>
 </body>
 </html>
