@@ -14,17 +14,18 @@
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-body {
+body.dark-theme {
   background-color: var(--bg-color);
   color: var(--text-main);
+  text-align: center;
   padding-bottom: 50px;
 }
 
-/* Glassmorphism Navigation Bar */
+/* Navigation Bar */
 .navbar {
   display: flex;
   justify-content: space-around;
-  background: rgba(21, 31, 50, 0.8);
+  background: rgba(21, 31, 50, 0.85);
   backdrop-filter: blur(10px);
   padding: 14px 10px;
   position: sticky;
@@ -45,76 +46,132 @@ body {
   color: var(--accent-color);
 }
 
-/* Birthday Special Banner */
+/* Respectful Birthday Banner */
 .birthday-banner {
-  background: linear-gradient(135deg, #e11d48, #9333ea);
-  color: white;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #38bdf8;
+  border-bottom: 2px solid #38bdf8;
   text-align: center;
-  padding: 15px;
-  font-weight: bold;
-  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
-  display: none; /* JS দিয়ে জন্মদিনে dynamically অন করা হবে */
+  padding: 14px 15px;
+  font-weight: 600;
+  font-size: 14px;
+  display: none; /* জন্মদিনে ডায়নামিকালি শো করবে */
+}
+
+/* Hero Header Image */
+header {
+  padding: 25px 15px;
+}
+
+.hero-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-color);
+  margin: 10px auto;
+  display: block;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.tagline {
+  color: var(--text-sub);
+  font-size: 13px;
+  margin-top: 5px;
 }
 
 /* Container & Cards */
 .container {
-  max-width: 680px;
-  margin: 20px auto;
+  max-width: 650px;
+  margin: 0 auto;
   padding: 0 15px;
 }
 
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 14px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Today in Memory Section */
 .today-memory-card {
   border: 2px solid var(--accent-color);
   background: linear-gradient(180deg, #1e293b, #151f32);
 }
 
+/* Forms & Inputs */
+input, textarea {
+  width: 100%;
+  padding: 11px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background: #0f172a;
+  border: 1px solid var(--border-color);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 11px;
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.btn-approve {
+  padding: 8px 15px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
 .media-player {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
   border-radius: 8px;
 }
 
-/* Gallery & Download */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
 }
 
 .photo-card img {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .btn-download {
   display: inline-block;
-  margin-top: 8px;
-  padding: 8px 14px;
+  margin-top: 10px;
+  padding: 8px 12px;
   background: #2563eb;
   color: white;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 12px;
   font-weight: bold;
 }
 
-/* Map iFrame */
 .map-container iframe {
   width: 100%;
   height: 200px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: none;
-  margin-top: 10px;
 }
