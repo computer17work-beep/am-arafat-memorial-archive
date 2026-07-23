@@ -1,10 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs
+import { 
+  getFirestore, 
+  collection, 
+  addDoc, 
+  getDocs 
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -19,7 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Memory Wall
+// Memory Wall - Add Data
 const btn = document.getElementById("sendMemory");
 
 if (btn) {
@@ -38,14 +37,15 @@ if (btn) {
     });
 
     alert("Memory Added!");
-
     location.reload();
   };
+}
 
-  const list = document.getElementById("memoryList");
+// Memory Wall - Read Data (Fixed Crash Bug)
+const list = document.getElementById("memoryList");
 
+if (list) {
   const snapshot = await getDocs(collection(db, "memories"));
-
   snapshot.forEach((doc) => {
     list.innerHTML += `
       <div class="card">
