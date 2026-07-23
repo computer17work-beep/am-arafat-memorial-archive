@@ -1,46 +1,120 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+:root {
+  --bg-color: #0b0f19;
+  --card-bg: #151f32;
+  --accent-color: #38bdf8;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --border-color: #24334d;
 }
 
-body{
-    background:#0d0d0d;
-    color:white;
-    text-align:center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-header{
-    padding:40px 20px;
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  padding-bottom: 50px;
 }
 
-h1{
-    font-size:32px;
-    margin-bottom:10px;
+/* Glassmorphism Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(21, 31, 50, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 14px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-color);
 }
 
-p{
-    color:#cfcfcf;
+.navbar a {
+  color: var(--text-sub);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
-.hero-image{
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid white;
-    margin:20px auto;
-    display:block;
+.navbar a.active, .navbar a:hover {
+  color: var(--accent-color);
 }
 
-.btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 25px;
-    background:white;
-    color:black;
-    text-decoration:none;
-    border-radius:30px;
-    font-weight:bold;
+/* Birthday Special Banner */
+.birthday-banner {
+  background: linear-gradient(135deg, #e11d48, #9333ea);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+  display: none; /* JS দিয়ে জন্মদিনে dynamically অন করা হবে */
+}
+
+/* Container & Cards */
+.container {
+  max-width: 680px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Today in Memory Section */
+.today-memory-card {
+  border: 2px solid var(--accent-color);
+  background: linear-gradient(180deg, #1e293b, #151f32);
+}
+
+.media-player {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+/* Gallery & Download */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.photo-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.btn-download {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Map iFrame */
+.map-container iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 10px;
 }
