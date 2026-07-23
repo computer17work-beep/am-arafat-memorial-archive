@@ -3,79 +3,273 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AM Arafat Memorial Archive</title>
-  <link rel="stylesheet" href="style.css">
+  <title>এ এম আরাফাত - স্মৃতি আর্কাইভ</title>
+  <link rel="stylesheet" href="style.css?v=10.0">
 </head>
 <body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <img src="profile.jpg" alt="Arafat" class="brand-img">
+  <!-- 📌 LOGIN / SIGN-IN SCREEN (ইউজার লগইন না করা পর্যন্ত এটি দেখাবে) -->
+  <div id="authScreen" class="container" style="margin-top: 80px;">
+    <div class="card" style="text-align: center;">
+      <h2 style="font-size: 24px; margin-bottom: 10px;">এ এম আরাফাত <span style="color: var(--accent-red);">স্মৃতি আর্কাইভ</span></h2>
+      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">সাইটে প্রবেশ করতে আপনার নাম ও পিন দিয়ে সাইন-ইন করুন</p>
+      
+      <input type="text" id="loginName" placeholder="আপনার নাম লিখুন">
+      <input type="password" id="loginPin" placeholder="পাসওয়ার্ড / পিন দিন (ইউজার: 1234, এডমিন: 9999)">
+      <button onclick="handleLogin()" class="btn-red">প্রবেশ করুন ▶</button>
+    </div>
+  </div>
+
+  <!-- 📌 MAIN WEBSITE (লগইন করার পর আনলক হবে) -->
+  <div id="mainWebsite" class="hidden">
+
+    <!-- Top Navigation Menu -->
+    <nav class="navbar">
       <div class="brand-text">
         <h1>এ এম আরাফাত</h1>
-        <span>স্মৃতি আর্কাইভ</span>
+        <span id="roleBadge">ইউজার মোড</span>
       </div>
-    </div>
-    <div class="nav-links">
-      <a href="index.html" class="active">হোম</a>
-      <a href="gallery.html">ছবি</a>
-      <a href="memories.html">স্মৃতি</a>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <img src="profile.jpg" alt="AM Arafat" class="hero-img">
-    <div>
-      <span class="life-span">ALWAYS IN OUR HEARTS</span>
-    </div>
-    <h1 class="hero-title">এ এম আরাফাত<br><span style="color: var(--accent-red);">স্মৃতি আর্কাইভ</span></h1>
-    <p class="hero-quote">"স্মৃতিগুলো থেকে যায় চিরকাল, থেকে যায় ভালোবাসায়।"</p>
-
-    <div class="cta-group">
-      <a href="gallery.html" class="btn-red">ছবিসমূহ দেখুন ▶</a>
-      <a href="memories.html" class="btn-dark">স্মৃতিচারণ পড়ুন 📖</a>
-    </div>
-  </section>
-
-  <!-- Content Section -->
-  <main class="container">
-
-    <!-- About Card -->
-    <div class="card">
-      <h2 class="card-title">🕊️ আমাদের প্রয়াস</h2>
-      <p class="card-desc">
-        এই আর্কাইভটি আমাদের প্রিয় এ এম আরাফাত-এর স্মৃতি, মুহূর্ত এবং ভালোবাসার দিনগুলোকে ডিজিটাল প্ল্যাটফর্মে সংরক্ষণ করার উদ্দেশ্যে তৈরি করা হয়েছে।
-      </p>
-    </div>
-
-    <!-- Audio Player Card -->
-    <div class="card">
-      <h2 class="card-title">🎵 পছন্দের অডিও / তিলাওয়াত</h2>
-      <p class="card-desc">তার প্রিয় অডিও স্মারকটি শুনুন।</p>
-      <audio controls class="media-player">
-        <source src="audio.mp3" type="audio/mpeg">
-        আপনার ব্রাউজার অডিও সাপোর্ট করে না।
-      </audio>
-    </div>
-
-    <!-- Featured Photo Preview -->
-    <div class="media-card">
-      <img src="profile.jpg" alt="Featured Memory">
-      <div class="media-card-body">
-        <span>স্মৃতি ফ্রেমে</span>
-        <h4>অমূল্য কিছু মুহূর্তের সংগ্রহ</h4>
+      <div class="nav-links">
+        <a onclick="showPage('feed')" id="navFeed" class="active">ফিড</a>
+        <a onclick="showPage('upload')" id="navUpload">আপলোড</a>
+        <a onclick="showPage('dowa')" id="navDowa">দোয়া</a>
+        <a onclick="handleLogout()" style="color: var(--accent-red);">লগআউট</a>
       </div>
-    </div>
+    </nav>
 
-    <!-- Total Photos Stat Box -->
-    <div class="stat-box">
-      <div class="stat-label">মোট সংরক্ষিত ছবি</div>
-      <div class="stat-number">১০+</div>
-    </div>
+    <main class="container">
 
-  </main>
+      <!-- 1. FEED PAGE (ছবি, কমেন্ট এবং পোস্ট) -->
+      <section id="pageFeed">
+        <h3 style="margin-bottom: 15px;">স্মৃতির অ্যালবাম ও কমেন্ট</h3>
+        <div id="feedList"></div>
+      </section>
 
+      <!-- 2. PHOTO UPLOAD PAGE -->
+      <section id="pageUpload" class="hidden">
+        <div class="card">
+          <h3 class="card-title">📸 নতুন ছবি আপলোড করুন</h3>
+          <form id="photoForm">
+            <input type="text" id="imgUrl" placeholder="ছবির লিংক (Direct Image URL)" required>
+            <textarea id="imgCaption" rows="3" placeholder="ছবির বিবরণ বা ক্যাপশন লিখুন..." required></textarea>
+            <button type="submit" class="btn-red">পাবলিশ করুন</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 3. DOWA / MEMORY PAGE -->
+      <section id="pageDowa" class="hidden">
+        <div class="card">
+          <h3 class="card-title">🤲 দোয়া ও স্মৃতিচারণ জমা দিন</h3>
+          <form id="dowaForm">
+            <textarea id="dowaText" rows="4" placeholder="আরাফাত ভাইয়ের জন্য দোয়া বা ভালোবাসার বাক্য লিখুন..." required></textarea>
+            <button type="submit" class="btn-red">দোয়া জমা দিন</button>
+          </form>
+        </div>
+
+        <h3 style="margin-top: 25px; margin-bottom: 15px;">সংগৃহীত দোয়াসমূহ</h3>
+        <div id="dowaList"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    let currentUser = null;
+    let isAdmin = false;
+
+    // --- Authentication ---
+    function handleLogin() {
+      const name = document.getElementById('loginName').value.trim();
+      const pin = document.getElementById('loginPin').value.trim();
+
+      if (!name || !pin) {
+        alert("দয়া করে নাম এবং পিন টাইপ করুন!");
+        return;
+      }
+
+      if (pin === "9999") {
+        isAdmin = true;
+        currentUser = name + " (Admin)";
+        document.getElementById('roleBadge').innerText = "এডমিন মোড 👑";
+      } else if (pin === "1234") {
+        isAdmin = false;
+        currentUser = name;
+        document.getElementById('roleBadge').innerText = "ইউজার: " + name;
+      } else {
+        alert("ভুল পিন! সঠিক পিন ব্যবহার করুন। (ইউজার পিন: 1234)");
+        return;
+      }
+
+      document.getElementById('authScreen').classList.add('hidden');
+      document.getElementById('mainWebsite').classList.remove('hidden');
+      renderFeed();
+      renderDowa();
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      isAdmin = false;
+      document.getElementById('authScreen').classList.remove('hidden');
+      document.getElementById('mainWebsite').classList.add('hidden');
+    }
+
+    // --- Navigation ---
+    function showPage(pageName) {
+      document.getElementById('pageFeed').classList.add('hidden');
+      document.getElementById('pageUpload').classList.add('hidden');
+      document.getElementById('pageDowa').classList.add('hidden');
+
+      document.getElementById('navFeed').classList.remove('active');
+      document.getElementById('navUpload').classList.remove('active');
+      document.getElementById('navDowa').classList.remove('active');
+
+      if (pageName === 'feed') {
+        document.getElementById('pageFeed').classList.remove('hidden');
+        document.getElementById('navFeed').classList.add('active');
+      } else if (pageName === 'upload') {
+        document.getElementById('pageUpload').classList.remove('hidden');
+        document.getElementById('navUpload').classList.add('active');
+      } else if (pageName === 'dowa') {
+        document.getElementById('pageDowa').classList.remove('hidden');
+        document.getElementById('navDowa').classList.add('active');
+      }
+    }
+
+    // --- Local Data Store (State) ---
+    let posts = JSON.parse(localStorage.getItem('arafat_posts_v2')) || [
+      {
+        id: 1,
+        author: "অ্যাডমিন",
+        url: "https://via.placeholder.com/600x400/121212/e11d48?text=AM+Arafat",
+        caption: "আরাফাত ভাইয়ের প্রথম স্মৃতিচিত্র।",
+        comments: [{ user: "রফিক", text: "আল্লাহ্‌ তাকে জান্নাতবাসী করুন।" }]
+      }
+    ];
+
+    let dowas = JSON.parse(localStorage.getItem('arafat_dowas_v2')) || [
+      { id: 1, author: "আরিফ", text: "মহান আল্লাহ্‌ যেন উনাকে ক্ষমা করে উত্তম স্থান দান করেন।" }
+    ];
+
+    // --- Feed & Comment Rendering ---
+    function renderFeed() {
+      const feedList = document.getElementById('feedList');
+      feedList.innerHTML = '';
+
+      posts.forEach((post, index) => {
+        let commentsHTML = '';
+        post.comments.forEach(c => {
+          commentsHTML += `<div class="single-comment"><span class="comment-user">${c.user}:</span> ${c.text}</div>`;
+        });
+
+        let deleteBtn = isAdmin ? `<button class="btn-delete" onclick="deletePost(${index})">🗑️ পোস্ট ডিলিট (Admin)</button>` : '';
+
+        feedList.innerHTML += `
+          <div class="feed-card">
+            <img src="${post.url}" class="feed-img" onerror="this.src='https://via.placeholder.com/600x300/121212/ffffff?text=Image+Error'">
+            <div class="feed-content">
+              <div class="feed-author">${post.author}</div>
+              <div class="feed-caption">${post.caption}</div>
+              ${deleteBtn}
+
+              <div class="comment-box">
+                <h5 style="margin-bottom: 8px; color: #a1a1aa;">কমেন্টসমূহ:</h5>
+                <div>${commentsHTML || '<p style="font-size:12px; color:#666;">কোনো কমেন্ট নেই</p>'}</div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                  <input type="text" id="commentInput-${index}" placeholder="কমেন্ট লিখুন..." style="margin-bottom:0; padding:8px;">
+                  <button onclick="addComment(${index})" class="btn-red" style="width: auto; padding: 8px 15px;">পাঠান</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    document.getElementById('photoForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const url = document.getElementById('imgUrl').value.trim();
+      const caption = document.getElementById('imgCaption').value.trim();
+
+      posts.unshift({
+        id: Date.now(),
+        author: currentUser,
+        url: url,
+        caption: caption,
+        comments: []
+      });
+
+      localStorage.setItem('arafat_posts_v2', JSON.stringify(posts));
+      renderFeed();
+      e.target.reset();
+      alert("ছবি সফলভাবে আপলোড হয়েছে!");
+      showPage('feed');
+    });
+
+    function addComment(postIndex) {
+      const input = document.getElementById(`commentInput-${postIndex}`);
+      const text = input.value.trim();
+      if (!text) return;
+
+      posts[postIndex].comments.push({
+        user: currentUser,
+        text: text
+      });
+
+      localStorage.setItem('arafat_posts_v2', JSON.stringify(posts));
+      renderFeed();
+    }
+
+    function deletePost(index) {
+      if (confirm("আপনি কি নিশ্চিত এই পোস্টটি ডিলিট করতে চান?")) {
+        posts.splice(index, 1);
+        localStorage.setItem('arafat_posts_v2', JSON.stringify(posts));
+        renderFeed();
+      }
+    }
+
+    // --- Dowa Rendering ---
+    function renderDowa() {
+      const dowaList = document.getElementById('dowaList');
+      dowaList.innerHTML = '';
+
+      dowas.forEach((d, index) => {
+        let deleteBtn = isAdmin ? `<button class="btn-delete" onclick="deleteDowa(${index})">🗑️ ডিলিট (Admin)</button>` : '';
+
+        dowaList.innerHTML += `
+          <div class="card">
+            <h4 style="color: var(--accent-red); font-size: 14px;">${d.author}</h4>
+            <p style="font-size: 15px; margin-top: 5px; color: #fff;">"${d.text}"</p>
+            ${deleteBtn}
+          </div>
+        `;
+      });
+    }
+
+    document.getElementById('dowaForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = document.getElementById('dowaText').value.trim();
+
+      dowas.unshift({
+        id: Date.now(),
+        author: currentUser,
+        text: text
+      });
+
+      localStorage.setItem('arafat_dowas_v2', JSON.stringify(dowas));
+      renderDowa();
+      e.target.reset();
+      alert("আপনার দোয়া সফলভাবে জমা হয়েছে!");
+    });
+
+    function deleteDowa(index) {
+      if (confirm("আপনি কি নিশ্চিত এই দোয়াটি ডিলিট করতে চান?")) {
+        dowas.splice(index, 1);
+        localStorage.setItem('arafat_dowas_v2', JSON.stringify(dowas));
+        renderDowa();
+      }
+    }
+  </script>
 </body>
 </html>
