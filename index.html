@@ -3,17 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AM Arafat Memorial Archive</title>
+  <title>AM Arafat Memorial Archive - v2</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    <img src="https://picsum.photos/300" class="hero-image" alt="Arafat">
-    <h1>🕊️ AM Arafat Memorial Archive</h1>
-    <p>Forever in our hearts.</p>
-    <a href="gallery.html" class="btn">Enter Memorial</a>
-  </header>
+  <!-- Birthday Banner -->
+  <div id="birthdayBanner" class="birthday-banner">
+    🎂 Happy Birthday in Heaven, AM Arafat! 🕊️ Always in our hearts.
+  </div>
+
+  <nav class="navbar">
+    <a href="index.html" class="active">🏠 Home</a>
+    <a href="gallery.html">📷 Photos</a>
+    <a href="memories.html">💬 Memories</a>
+    <a href="admin.html">👑 Admin</a>
+  </nav>
+
+  <main class="container">
+    
+    <!-- Today in Memory Section -->
+    <div id="todayInMemory" class="card today-memory-card" style="display: none;">
+      <h2>📅 Today in Memory (আজকের দিনে)</h2>
+      <p id="todayMemoryDate" style="color: var(--accent-color); font-size: 14px;"></p>
+      <div id="todayMemoryContent" style="margin-top: 15px;"></div>
+    </div>
+
+    <!-- Favorite Recitation/Music Section -->
+    <div class="card">
+      <h3>🎵 Favorite Recitation / Audio</h3>
+      <p style="font-size: 13px; color: var(--text-sub);">Listen to his favorite audio memory.</p>
+      <audio controls class="media-player">
+        <source src="favorite-recitation.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <!-- Featured Video Section -->
+    <div class="card">
+      <h3>📹 Video Memory</h3>
+      <video controls class="media-player">
+        <source src="video-memory.mp4" type="video/mp4">
+        Your browser does not support video playback.
+      </video>
+    </div>
+
+    <!-- Memory Location Map -->
+    <div class="card map-container">
+      <h3>📍 Favorite Places & Map</h3>
+      <p style="font-size: 13px; color: var(--text-sub);">Memorable locations associated with him.</p>
+      <iframe src="https://maps.google.com/maps?q=Barishal,Bangladesh&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    </div>
+
+  </main>
 
   <script type="module" src="firebase.js"></script>
 </body>
