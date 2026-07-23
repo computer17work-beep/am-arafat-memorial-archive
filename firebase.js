@@ -1,7 +1,10 @@
-// Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 import {
-  getFirestore
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -14,4 +17,41 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+const db = getFirestore(app);
+
+// Memory Wall
+const btn = document.getElementById("sendMemory");
+
+if (btn) {
+  btn.onclick = async () => {
+    const name = document.getElementById("name").value;
+    const memory = document.getElementById("memory").value;
+
+    if (!name || !memory) {
+      alert("Fill all fields");
+      return;
+    }
+
+    await addDoc(collection(db, "memories"), {
+      name,
+      memory
+    });
+
+    alert("Memory Added!");
+
+    location.reload();
+  };
+
+  const list = document.getElementById("memoryList");
+
+  const snapshot = await getDocs(collection(db, "memories"));
+
+  snapshot.forEach((doc) => {
+    list.innerHTML += `
+      <div class="card">
+        <h3>${doc.data().name}</h3>
+        <p>${doc.data().memory}</p>
+      </div>
+    `;
+  });
+}
