@@ -1,22 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery - AM Arafat Memorial Archive</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Photo Gallery - AM Arafat</title>
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
-  <header>
-    <h1>📷 Photo Gallery</h1>
-    <p>Memories that will always stay with us.</p>
-  </header>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="brand-text">
+        <h1>এ এম আরাফাত</h1>
+        <span>ফটোগ্যালারি</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">হোম</a>
+      <a href="gallery.html" class="active">ছবি</a>
+      <a href="memories.html">স্মৃতি</a>
+    </div>
+  </nav>
 
-  <div id="gallery">
-    <a href="memories.html" class="btn">💬 Memory Wall</a>
-  </div>
+  <main class="container">
+    
+    <!-- Upload Section -->
+    <div class="card">
+      <h3 class="card-title">📸 নতুন ছবি যোগ করুন</h3>
+      <form id="uploadForm">
+        <input type="text" id="imgUrl" placeholder="ছবির লিংক (Image URL)" required>
+        <input type="text" id="imgCaption" placeholder="ছবির ক্যাপশন / বিবরণ" required>
+        <button type="submit" class="btn-red" style="width: 100%;">গ্যালারিতে যুক্ত করুন</button>
+      </form>
+    </div>
 
-  <script type="module" src="firebase.js"></script>
+    <!-- Gallery List -->
+    <h3 style="margin-bottom: 15px;">স্মৃতির অ্যালবাম</h3>
+    <div id="galleryGrid" class="gallery-grid">
+      <!-- Uploaded items will appear here -->
+    </div>
+
+  </main>
+
+  <script>
+    const uploadForm = document.getElementById('uploadForm');
+    const galleryGrid = document.getElementById('galleryGrid');
+
+    // Load initial or saved photos
+    let photos = JSON.parse(localStorage.getItem('arafat_photos')) || [
+      { url: 'https://via.placeholder.com/600x400/121212/e11d48?text=AM+Arafat', caption: 'স্মৃতির প্রথম অ্যালবাম' }
+    ];
+
+    function renderPhotos() {
+      galleryGrid.innerHTML = '';
+      photos.forEach(photo => {
+        const card = document.createElement('div');
+        card.className = 'media-card';
+        card.innerHTML = `
+          <img src="${photo.url}" onerror="this.src='https://via.placeholder.com/600x400/121212/ffffff?text=Image+Not+Found'">
+          <div class="media-card-body">
+            <h4>${photo.caption}</h4>
+          </div>
+        `;
+        galleryGrid.appendChild(card);
+      });
+    }
+
+    uploadForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const url = document.getElementById('imgUrl').value;
+      const caption = document.getElementById('imgCaption').value;
+
+      photos.unshift({ url, caption });
+      localStorage.setItem('arafat_photos', JSON.stringify(photos));
+      renderPhotos();
+
+      uploadForm.reset();
+      alert('ছবি সফলভাবে যোগ হয়েছে!');
+    });
+
+    renderPhotos();
+  </script>
 </body>
 </html>
